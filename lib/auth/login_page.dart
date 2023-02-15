@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ecommerce/auth/signup_page.dart';
 import 'package:flutter/material.dart';
 
 import '../shop/product_page.dart';
@@ -153,17 +154,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text('Don\'t have an account?'),
-                  // TextButton(
-                  //     onPressed: () {
-                  //       Navigator.of(context)
-                  //           .pushNamed(ChooseCategory.routeName);
-                  //     },
-                  //     child: Text(
-                  //       'Sign up',
-                  //       style: TextStyle(
-                  //           decoration: TextDecoration.underline,
-                  //           color: textcolordark),
-                  //     ))
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(SignUpScreen.routeName);
+                      },
+                      child: Text(
+                        'Sign up',
+                        style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Colors.black),
+                      ))
                 ],
               )
             ],

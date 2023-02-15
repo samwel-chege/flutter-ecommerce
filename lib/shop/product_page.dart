@@ -1,5 +1,6 @@
 import 'package:ecommerce/shop/items_page.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../common.dart';
 import 'cart_page.dart';
@@ -13,6 +14,18 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
+  @override
+  void initState() {
+    gettoken().then((value) {});
+    super.initState();
+  }
+
+  Future gettoken() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    var token = pref.getString("token");
+    return token;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

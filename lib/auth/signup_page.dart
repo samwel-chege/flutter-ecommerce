@@ -1,7 +1,14 @@
 // ignore_for_file: prefer_const_constructors, prefer_typing_uninitialized_variables, empty_catches
 
+import 'dart:convert';
+
+import 'package:ecommerce/shop/product_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../API/api.dart';
+import '../services/functions.dart';
 
 import 'login_page.dart';
 
@@ -38,39 +45,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
   }
 
-  userid(var id) async {
-    // SharedPreferences preferences = await SharedPreferences.getInstance();
+ 
 
-    // preferences.setString('user_id', id);
+  token(var token) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    preferences.setString('token', token);
   }
 
-  userdata(var userdata) async {
-    // SharedPreferences preferences = await SharedPreferences.getInstance();
+  Future register(username, email, String password) async {
+    try {
+      ProgressDialog pr = ProgressDialog(context, isDismissible: false);
+      pr.style(message: "Signing you up....");
+      pr.show();
+      String registerUrl = Api.apiUrl + Api.endpointSignup;
+      var data = {"email": email, "name": username, "password": password};
+      var responsedata = await httppostsignup(registerUrl, data, context);
+      token(responsedata["token"]);
+      Future.delayed(
+        Duration(seconds: 2),
+        () {
+          pr.hide();
+        },
+      );
 
-    // preferences.setString('userdata', userdata);
+      return responsedata;
+    } catch (e) {}
   }
-
-  // var category;
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  //   category = ModalRoute.of(context)!.settings.arguments;
-  // }
-
-  // Future register(username, email, password) async {
-  //   try {
-  //     String registerUrl = Api.api_url_auth + Api.endpoint_signup;
-  //     var data = {
-  //       "token": Api.auth_key,
-  //       "names": username,
-  //       "password": password
-  //     };
-  //     var responsedata = await httppostsignup(registerUrl, data, context);
-  //     var res = responsedata["user_id"];
-
-  //     encodeddata = res;
-  //   } catch (e) {}
-  // }
 
   final _signupkey = GlobalKey<FormState>();
   @override
@@ -113,26 +114,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       'Names',
                       style: TextStyle(color: Colors.black),
                     ),
-                    // CustomFormTextField(
-                    //     validator: val.nameval,
-                    //     controller: username,
-                    //     hintText: "Enter your name"),
+                    
                     TextFormField(
                       decoration: InputDecoration(hintText: "Enter name"),
+                      controller: username,
                     ),
                     SizedBox(
                       height: 20,
                     ),
                     Text(
-                      'Phone',
+                      'Email',
                       style: TextStyle(color: Colors.black),
                     ),
-                    // CustomFormTextField(
-                    //     validator: val.mobileval,
-                    //     controller: phone,
-                    //     hintText: "Enter your email "),
+                  
                     TextFormField(
-                      decoration: InputDecoration(hintText: "Enter name"),
+                      decoration: InputDecoration(hintText: "Enter your email"),
+                      controller: email,
                     ),
 
                     SizedBox(
@@ -187,9 +184,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 height: 60,
                 child: ElevatedButton(
                   onPressed: () {
-                    if (_signupkey.currentState!.validate()) {
-                      // register(username.text, category, phone.text,
-                    }
+                    // if (_signupkey.currentState!.validate()) {
+
+                    register(
+                        username.text, email.text, jsonEncode(password.text));
+
+                    // }
                   },
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.black
                       // foregroundColor: Colors.white,
