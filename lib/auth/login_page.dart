@@ -2,8 +2,13 @@ import 'dart:convert';
 
 import 'package:ecommerce/auth/signup_page.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../shop/product_page.dart';
+
+import '../API/api.dart';
+import '../services/functions.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -15,8 +20,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController email;
 
-  late TextEditingController phone;
-  late TextEditingController phonereset;
+  late TextEditingController username;
 
   late TextEditingController password;
   // late Validation val;
@@ -24,8 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     email = TextEditingController();
-    phone = TextEditingController();
-    phonereset = TextEditingController();
+    username = TextEditingController();
     password = TextEditingController();
   }
 
@@ -37,7 +40,45 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
+  token(token) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    preferences.setString('token', token);
+  }
+
   bool unchecked = false;
+
+  SnackBar snackBar(message, color) {
+    return SnackBar(
+        duration: const Duration(seconds: 4),
+        backgroundColor: color,
+        content: Text(
+          message,
+          style: const TextStyle(fontSize: 18),
+        ));
+  }
+
+  Future login(email, username, password) async {
+    ProgressDialog pr = ProgressDialog(context, isDismissible: false);
+    pr.style(message: 'Logging you in...');
+    try {
+      pr.show();
+      String loginUrl = Api.apiUrl + Api.endpointLogin;
+
+      var data = {"email": email, "name": username, "password": password};
+
+      var responsedata = await httppostlogin(loginUrl, data, context);
+
+      token(jsonEncode(responsedata["token"]));
+
+      Future.delayed(
+        Duration(seconds: 2),
+        () {
+          pr.hide();
+        },
+      );
+    } catch (e) {}
+  }
 
   final _logformkey = GlobalKey<FormState>();
   @override
@@ -77,11 +118,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Email',
+                      'Name',
                       style: TextStyle(color: Colors.black),
                     ),
                     TextFormField(
                       decoration: InputDecoration(hintText: "Enter name"),
+                      controller: username,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Email',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(hintText: "Enter your email"),
+                      controller: email,
                     ),
                     SizedBox(
                       height: 20,
@@ -97,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         textInputAction: TextInputAction.done,
                         controller: password,
                         // validator: val.passwordval,
-                        // obscureText: passhidden,
+                        obscureText: passhidden,
                         style: const TextStyle(color: Colors.grey),
                         decoration: InputDecoration(
                           hintText: "Password",
@@ -135,10 +188,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 45,
                 child: ElevatedButton(
                   onPressed: () {
-                    if (_logformkey.currentState!.validate()) {
-                      Navigator.of(context).pushNamed(ProductPage.routeName);
-                      // login(phonenumber.text, password.text);
-                    }
+                    // if (_logformkey.currentState!.validate()) {
+
+                    login(email.text, username.text, password.text);
+                    // }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,

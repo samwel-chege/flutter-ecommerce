@@ -54,7 +54,7 @@ Future httppostsignup(
   } catch (e) {}
 }
 
-Future httppost(
+Future httppostlogin(
     String url, Map<String, dynamic> data, BuildContext context) async {
   try {
     var vardata = data;
@@ -71,12 +71,28 @@ Future httppost(
     var jsonResponse = json.decode(response.body);
 
     if (response.statusCode == Api.codeOK) {
+      Navigator.of(context).pushReplacementNamed(ProductPage.routeName);
       return jsonResponse;
     } else {
       ScaffoldMessenger.of(context)
-          .showSnackBar(snackBar(jsonResponse, Colors.red[500]));
+          .showSnackBar(snackBar(jsonResponse["message"], Colors.red[500]));
+      // Future.delayed(const Duration(seconds: 1)).then((value) {});
 
       return jsonResponse;
     }
+  } catch (e) {}
+}
+
+Future httppost(String token, String url, BuildContext context) async {
+  try {
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    return response.body;
   } catch (e) {}
 }
