@@ -23,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController username;
 
   late TextEditingController password;
-  // late Validation val;
+
   @override
   void initState() {
     super.initState();
@@ -72,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
       token(jsonEncode(responsedata["token"]));
 
       Future.delayed(
-        Duration(seconds: 2),
+        Duration(seconds: 5),
         () {
           pr.hide();
         },
@@ -98,7 +98,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 200,
                     width: 200,
-                    // child: Image.asset('assets/images/logo.png'),
                   ),
                 ],
               ),
@@ -149,7 +148,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         keyboardType: TextInputType.text,
                         textInputAction: TextInputAction.done,
                         controller: password,
-                        // validator: val.passwordval,
                         obscureText: passhidden,
                         style: const TextStyle(color: Colors.grey),
                         decoration: InputDecoration(
@@ -188,10 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 45,
                 child: ElevatedButton(
                   onPressed: () {
-                    // if (_logformkey.currentState!.validate()) {
-
                     login(email.text, username.text, password.text);
-                    // }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,

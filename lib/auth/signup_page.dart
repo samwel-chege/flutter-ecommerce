@@ -24,7 +24,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   late TextEditingController username;
   late TextEditingController email;
   late TextEditingController password;
-  // late Validation val;
 
   var encodeddata;
   @override
@@ -33,8 +32,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     username = TextEditingController();
     email = TextEditingController();
     password = TextEditingController();
-
-    // val = Validation();
   }
 
   bool passhidden = true;
@@ -44,8 +41,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       passhidden = !passhidden;
     });
   }
-
- 
 
   token(var token) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -61,7 +56,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       String registerUrl = Api.apiUrl + Api.endpointSignup;
       var data = {"email": email, "name": username, "password": password};
       var responsedata = await httppostsignup(registerUrl, data, context);
-      token(responsedata["token"]);
+      token(jsonEncode(responsedata["token"]));
+
       Future.delayed(
         Duration(seconds: 2),
         () {
@@ -77,7 +73,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: background,
       body: SafeArea(
           child: SingleChildScrollView(
         child: Padding(
@@ -91,16 +86,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SizedBox(
                     height: 200,
                     width: 200,
-                    // child: Image.asset('assets/images/logo.png'),
                   ),
                 ],
               ),
               Text(
                 'Create Your Account',
-                style: TextStyle(
-                    // color: textcolordark,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w400),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
               ),
               SizedBox(
                 height: 20,
@@ -114,7 +105,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       'Names',
                       style: TextStyle(color: Colors.black),
                     ),
-                    
                     TextFormField(
                       decoration: InputDecoration(hintText: "Enter name"),
                       controller: username,
@@ -126,16 +116,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       'Email',
                       style: TextStyle(color: Colors.black),
                     ),
-                  
                     TextFormField(
                       decoration: InputDecoration(hintText: "Enter your email"),
                       controller: email,
                     ),
-
                     SizedBox(
                       height: 20,
                     ),
-
                     Text(
                       'Password',
                       style: TextStyle(color: Colors.black),
@@ -144,7 +131,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       keyboardType: TextInputType.text,
                       textInputAction: TextInputAction.done,
                       controller: password,
-                      // validator: val.passwordval,
                       obscureText: passhidden,
                       style: const TextStyle(color: Colors.grey),
                       decoration: InputDecoration(
@@ -184,16 +170,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 height: 60,
                 child: ElevatedButton(
                   onPressed: () {
-                    // if (_signupkey.currentState!.validate()) {
-
                     register(
                         username.text, email.text, jsonEncode(password.text));
-
-                    // }
                   },
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.black
-                      // foregroundColor: Colors.white,
-                      ),
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: Colors.black),
                   child: Text('Signup'),
                 ),
               ),

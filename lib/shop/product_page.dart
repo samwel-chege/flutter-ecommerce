@@ -43,10 +43,12 @@ class _ProductPageState extends State<ProductPage> {
 
       var responsedata = await httppost(bearerToken, productsUrl, context);
 
-      products = jsonDecode(responsedata);
+      var product = jsonDecode(responsedata);
+      print(product);
+      products.addAll(product);
 
       Future.delayed(
-        Duration(seconds: 2),
+        Duration(seconds: 5),
         () {
           pr.hide();
         },

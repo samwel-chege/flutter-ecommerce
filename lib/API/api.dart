@@ -1,5 +1,5 @@
 class Api {
-  static String apiUrl = "https://8a60-41-80-113-189.in.ngrok.io/";
+  static String apiUrl = "https://010f-41-80-113-208.eu.ngrok.io/";
 
   static String endpointSignup = "api/signup";
   static String endpointLogin = "api/login";
