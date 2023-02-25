@@ -10,9 +10,12 @@ import '../common.dart';
 import 'cart_page.dart';
 import '../API/api.dart';
 import '../services/functions.dart';
+import 'package:provider/provider.dart';
 
 class ProductPage extends StatefulWidget {
-  const ProductPage({super.key});
+  // ProductPage({super.key});
+  late final ProductPage product;
+
   static const routeName = '/products';
 
   @override
@@ -20,6 +23,7 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
+  // final Cart cart = Cart();
   @override
   void initState() {
     gettoken();
@@ -44,8 +48,9 @@ class _ProductPageState extends State<ProductPage> {
       var responsedata = await httppost(bearerToken, productsUrl, context);
 
       var product = jsonDecode(responsedata);
-      print(product);
-      products.addAll(product);
+      setState(() {
+        products.addAll(product);
+      });
 
       Future.delayed(
         Duration(seconds: 5),
@@ -59,36 +64,54 @@ class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(actions: [
+      appBar: AppBar(title: Text('Shopynet'), centerTitle: true, actions: [
         IconButton(
             onPressed: () {
               Navigator.of(context).pushNamed(ShoppingCartPage.routeName);
             },
             icon: Icon(Icons.shopping_cart))
       ]),
-      body: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: products.length,
-                itemBuilder: (context, index) {
-                  return ProductCard(
-                    productImage: products[index]["img_url"],
-                    productName: products[index]["prod_name"],
-                    productPrice:
-                        double.parse(products[index]["selling_price"]),
-                    icon: Icons.shopping_cart,
-                    widget: null,
-                  );
-                },
-              ),
-            ),
-          ],
+      body: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 2 / 3,
         ),
-      )),
+        itemCount: products.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Card(
+            child: Column(
+              children: [
+                Expanded(
+                  child: Image.network(
+                    products[index]['img_url'],
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                ListTile(
+                  title: Text(
+                    products[index]['prod_name'],
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                  subtitle: Text(
+                    (products[index]["selling_price"]),
+                    style: TextStyle(fontSize: 14.0),
+                  ),
+                  trailing: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        items.add(products[index]);
+                        sumlist(products[index]["selling_price"]);
+                      });
+                      setCart(items);
+                    },
+                    child: Icon(Icons.add_shopping_cart),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

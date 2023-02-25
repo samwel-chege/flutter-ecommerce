@@ -58,14 +58,14 @@ class _LoginScreenState extends State<LoginScreen> {
         ));
   }
 
-  Future login(email, username, password) async {
+  Future login(email, password) async {
     ProgressDialog pr = ProgressDialog(context, isDismissible: false);
     pr.style(message: 'Logging you in...');
     try {
       pr.show();
       String loginUrl = Api.apiUrl + Api.endpointLogin;
 
-      var data = {"email": email, "name": username, "password": password};
+      var data = {"email": email, "password": password};
 
       var responsedata = await httppostlogin(loginUrl, data, context);
 
@@ -116,17 +116,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Name',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    TextFormField(
-                      decoration: InputDecoration(hintText: "Enter name"),
-                      controller: username,
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
                     Text(
                       'Email',
                       style: TextStyle(color: Colors.black),
@@ -186,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 45,
                 child: ElevatedButton(
                   onPressed: () {
-                    login(email.text, username.text, password.text);
+                    login(email.text, password.text);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,

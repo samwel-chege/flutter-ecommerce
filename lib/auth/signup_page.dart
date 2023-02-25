@@ -57,6 +57,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       var data = {"email": email, "name": username, "password": password};
       var responsedata = await httppostsignup(registerUrl, data, context);
       token(jsonEncode(responsedata["token"]));
+      print(responsedata);
 
       Future.delayed(
         Duration(seconds: 2),
