@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:ecommerce/auth/login_page.dart';
 import 'package:ecommerce/shop/product_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -31,9 +32,11 @@ Future httppostsignup(
     );
 
     var jsonResponse = json.decode(response.body);
+    print(response.body);
+    print(response.statusCode);
 
     if (response.statusCode == Api.codeOK) {
-      Navigator.of(context).pushReplacementNamed(ProductPage.routeName);
+      Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
       return jsonResponse;
     } else {
       var res = jsonResponse as Map;
