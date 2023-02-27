@@ -1,4 +1,5 @@
 import 'package:ecommerce/shop/cart_page.dart';
+import 'package:ecommerce/tabs_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce/auth/signup_page.dart';
 import 'package:ecommerce/auth/login_page.dart';
@@ -9,12 +10,7 @@ import 'shop/product_page.dart';
 
 void main() {
   runApp(
-    MultiProvider(
-      providers: [
-        // ChangeNotifierProvider(create: (context) => Cart()),
-      ],
-      child: Ecommerce(),
-    ),
+    Ecommerce(),
   );
 }
 
@@ -37,11 +33,23 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Image.network(
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUh0PRwqN8V3L7bW_slt6QYm3MdW8HdNCk0Gz7c6s&s',
-          width: 150,
-          height: 150,
-          fit: BoxFit.cover,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.network(
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUh0PRwqN8V3L7bW_slt6QYm3MdW8HdNCk0Gz7c6s&s',
+              width: 150,
+              height: 150,
+              fit: BoxFit.cover,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              'Welcome',
+              style: TextStyle(fontSize: 25),
+            )
+          ],
         ),
       ),
     );
@@ -62,7 +70,8 @@ class Ecommerce extends StatelessWidget {
         SignUpScreen.routeName: (context) => const SignUpScreen(),
         LoginScreen.routeName: (context) => const LoginScreen(),
         ProductPage.routeName: (context) => ProductPage(),
-        ShoppingCartPage.routeName: (context) => ShoppingCartPage()
+        ShoppingCartPage.routeName: (context) => ShoppingCartPage(),
+        TabsScreen.routeName: (context) => const TabsScreen()
       },
       // home: Scaffold(
       //   appBar: AppBar(

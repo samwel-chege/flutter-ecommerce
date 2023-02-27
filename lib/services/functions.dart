@@ -3,9 +3,12 @@ import 'package:ecommerce/auth/login_page.dart';
 import 'package:ecommerce/shop/product_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../API/api.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
+
+import '../tabs_screen.dart';
 
 SnackBar snackBar(message, color) {
   return SnackBar(
@@ -74,7 +77,7 @@ Future httppostlogin(
     var jsonResponse = json.decode(response.body);
 
     if (response.statusCode == Api.codeOK) {
-      Navigator.of(context).pushReplacementNamed(ProductPage.routeName);
+      Navigator.of(context).pushReplacementNamed(TabsScreen.routeName);
       return jsonResponse;
     } else {
       ScaffoldMessenger.of(context)
@@ -98,4 +101,10 @@ Future httppost(String token, String url, BuildContext context) async {
     );
     return response.body;
   } catch (e) {}
+}
+
+pref(string, data) async {
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+
+  preferences.setString(string, data);
 }

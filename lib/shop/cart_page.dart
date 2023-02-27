@@ -5,6 +5,7 @@ import 'package:collection/collection.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../common.dart';
+import '../tabs_screen.dart';
 import 'items_page.dart';
 
 class ShoppingCartPage extends StatefulWidget {
@@ -36,6 +37,11 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Shopping Cart"),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pushReplacementNamed(TabsScreen.routeName);
+            },
+            icon: Icon(Icons.arrow_back)),
       ),
       body: Column(
         children: <Widget>[
@@ -64,7 +70,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                                 child: Row(
                                   children: [
                                     Image.network(
-                                      itemsincart[index]["img_url"],
+                                      items[index]["img_url"],
                                       height: 150,
                                       width: 250,
                                       fit: BoxFit.cover,
