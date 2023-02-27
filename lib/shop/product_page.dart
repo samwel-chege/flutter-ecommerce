@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:ecommerce/auth/login_page.dart';
+import 'package:ecommerce/screens/profile_page.dart';
 import 'package:ecommerce/shop/items_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -34,7 +36,8 @@ class _ProductPageState extends State<ProductPage> {
   Future gettoken() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     var token = pref.getString("token");
-    fetchproducts(jsonDecode(token!));
+
+    fetchproducts(jsonDecode(token as String));
   }
 
   var products = [];
@@ -48,29 +51,18 @@ class _ProductPageState extends State<ProductPage> {
       var responsedata = await httppost(bearerToken, productsUrl, context);
 
       var product = jsonDecode(responsedata);
+      if (product != null) {
+        pr.hide();
+      }
       setState(() {
         products.addAll(product);
       });
-
-      Future.delayed(
-        Duration(seconds: 5),
-        () {
-          pr.hide();
-        },
-      );
     } catch (e) {}
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Shopynet'), centerTitle: true, actions: [
-        IconButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed(ShoppingCartPage.routeName);
-            },
-            icon: Icon(Icons.shopping_cart))
-      ]),
       body: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,

@@ -40,12 +40,6 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
-  token(token) async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-
-    preferences.setString('token', token);
-  }
-
   bool unchecked = false;
 
   SnackBar snackBar(message, color) {
@@ -69,8 +63,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
       var responsedata = await httppostlogin(loginUrl, data, context);
 
-      token(jsonEncode(responsedata["token"]));
-
+      pref('token', jsonEncode(responsedata["token"]));
+      pref('user', jsonEncode(responsedata["user"]));
       Future.delayed(
         Duration(seconds: 5),
         () {
