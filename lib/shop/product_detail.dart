@@ -18,7 +18,7 @@ class ProductDetail extends StatelessWidget {
           Expanded(
             child: Image.network(product['img_url']),
           ),
-          SizedBox(height: 16),
+          SizedBox(height: 20),
           Text(
             product['prod_name'],
             style: TextStyle(
@@ -26,7 +26,14 @@ class ProductDetail extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 16),
+          SizedBox(height: 20),
+          Text(
+            product['description'],
+            style: TextStyle(
+              fontSize: 16,
+            ),
+          ),
+          SizedBox(height: 20),
           Text(
             '\$${product['selling_price']}',
             style: TextStyle(
