@@ -57,7 +57,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       var data = {"email": email, "name": username, "password": password};
       var responsedata = await httppostsignup(registerUrl, data, context);
       token(jsonEncode(responsedata["token"]));
-      print(responsedata);
 
       Future.delayed(
         Duration(seconds: 2),
@@ -171,8 +170,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 height: 60,
                 child: ElevatedButton(
                   onPressed: () {
-                    register(
-                        username.text, email.text, jsonEncode(password.text));
+                    register(username.text, email.text, password.text);
                   },
                   style:
                       ElevatedButton.styleFrom(backgroundColor: Colors.black),
