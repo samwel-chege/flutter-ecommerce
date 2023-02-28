@@ -1,4 +1,5 @@
 import 'package:ecommerce/shop/cart_page.dart';
+import 'package:ecommerce/shop/product_detail.dart';
 import 'package:ecommerce/tabs_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce/auth/signup_page.dart';
@@ -71,18 +72,9 @@ class Ecommerce extends StatelessWidget {
         LoginScreen.routeName: (context) => const LoginScreen(),
         ProductPage.routeName: (context) => ProductPage(),
         ShoppingCartPage.routeName: (context) => ShoppingCartPage(),
-        TabsScreen.routeName: (context) => const TabsScreen()
+        TabsScreen.routeName: (context) => const TabsScreen(),
+        // ProductDetail.routeName: (context) => ProductDetail(),
       },
-      // home: Scaffold(
-      //   appBar: AppBar(
-      //       backgroundColor: Colors.amber, title: const Text('E-commerce')),
-      //   body: const Center(
-      //     child: Padding(
-      //       child: Text('Welcome to  shop it!'),
-      //       padding: EdgeInsets.all(10),
-      //     ),
-      //   ),
-      // ),
     );
   }
 }
