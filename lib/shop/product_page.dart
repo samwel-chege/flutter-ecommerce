@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:ecommerce/auth/login_page.dart';
 import 'package:ecommerce/screens/profile_page.dart';
 import 'package:ecommerce/shop/items_page.dart';
+import 'package:ecommerce/shop/product_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,6 +32,16 @@ class _ProductPageState extends State<ProductPage> {
     gettoken();
 
     super.initState();
+  }
+
+  SnackBar snackBar(message, color) {
+    return SnackBar(
+        duration: const Duration(seconds: 4),
+        backgroundColor: color,
+        content: Text(
+          message,
+          style: const TextStyle(fontSize: 18),
+        ));
   }
 
   Future gettoken() async {
@@ -70,36 +81,52 @@ class _ProductPageState extends State<ProductPage> {
         ),
         itemCount: products.length,
         itemBuilder: (BuildContext context, int index) {
-          return Card(
-            child: Column(
-              children: [
-                Expanded(
-                  child: Image.network(
-                    products[index]['img_url'],
-                    fit: BoxFit.cover,
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        ProductDetail(product: products[index])),
+              );
+            },
+            child: Card(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Image.network(
+                      products[index]['img_url'],
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-                ListTile(
-                  title: Text(
-                    products[index]['prod_name'],
-                    style: TextStyle(fontSize: 16.0),
+                  ListTile(
+                    title: Text(
+                      products[index]['prod_name'],
+                      style: TextStyle(fontSize: 16.0),
+                    ),
+                    subtitle: Text(
+                      (products[index]["selling_price"]),
+                      style: TextStyle(fontSize: 14.0),
+                    ),
+                    trailing: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          items.add(products[index]);
+                          sumlist(products[index]["selling_price"]);
+                        });
+                        setCart(items);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          snackBar(
+                            'Product added to cart',
+                            Colors.green,
+                          ),
+                        );
+                      },
+                      child: Icon(Icons.add_shopping_cart),
+                    ),
                   ),
-                  subtitle: Text(
-                    (products[index]["selling_price"]),
-                    style: TextStyle(fontSize: 14.0),
-                  ),
-                  trailing: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        items.add(products[index]);
-                        sumlist(products[index]["selling_price"]);
-                      });
-                      setCart(items);
-                    },
-                    child: Icon(Icons.add_shopping_cart),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },
