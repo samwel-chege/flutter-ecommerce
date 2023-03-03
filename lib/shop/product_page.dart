@@ -34,16 +34,6 @@ class _ProductPageState extends State<ProductPage> {
     super.initState();
   }
 
-  SnackBar snackBar(message, color) {
-    return SnackBar(
-        duration: const Duration(seconds: 4),
-        backgroundColor: color,
-        content: Text(
-          message,
-          style: const TextStyle(fontSize: 18),
-        ));
-  }
-
   Future gettoken() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     var token = pref.getString("token");
@@ -116,7 +106,7 @@ class _ProductPageState extends State<ProductPage> {
                         });
                         setCart(items);
                         ScaffoldMessenger.of(context).showSnackBar(
-                          snackBar(
+                          snackBarWidget(
                             'Product added to cart',
                             Colors.green,
                           ),
