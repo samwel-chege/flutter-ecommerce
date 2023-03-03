@@ -1,5 +1,6 @@
 import 'package:ecommerce/screens/profile_page.dart';
 import 'package:ecommerce/shop/cart_page.dart';
+import 'package:ecommerce/shop/categories.dart';
 import 'package:ecommerce/shop/product_page.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,7 @@ class _TabsScreenState extends State<TabsScreen> {
     ProductPage(),
     // Second page
     ShoppingCartPage(),
+    Categories(),
     ProfilePage(),
   ];
 
@@ -36,7 +38,7 @@ class _TabsScreenState extends State<TabsScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
-            backgroundColor: Colors.amber,
+            backgroundColor: Colors.blueAccent,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart),
@@ -44,9 +46,14 @@ class _TabsScreenState extends State<TabsScreen> {
             backgroundColor: Colors.blueAccent,
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.category),
+            label: 'Categories',
+            backgroundColor: Colors.blueAccent,
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',
-            backgroundColor: Colors.blueGrey,
+            backgroundColor: Colors.blueAccent,
           ),
         ],
         currentIndex: _selectedIndex,
