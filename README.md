@@ -12,8 +12,7 @@ login
 
 ![login](https://github.com/samwel-chege/flutter-ecommerce/assets/84846349/c4f84100-9eed-4f67-8adf-edf01aa43ede) -->
 
-###
-Products & Product details
+### Products & Product details
 
 <img src="assets/screenshots/products.png" height="500em" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/screenshots/product.png" height="500em" />
 
@@ -24,8 +23,7 @@ product
 
 ![product](https://github.com/samwel-chege/flutter-ecommerce/assets/84846349/75cd749c-236a-498e-92cc-dc58c8830ee5) -->
 
-###
-Cart & adding to cart
+### Cart & adding to cart
 
 <img src="assets/screenshots/addtocart.png" height="500em" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/screenshots/cart.png" height="500em" />
 
@@ -36,8 +34,8 @@ cart -->
 
 <!-- ![cart](https://github.com/samwel-chege/flutter-ecommerce/assets/84846349/26aff3a1-b894-453b-a0f8-a7615f107172) -->
 
-###
-Categories & Profile
+### Categories & Profile
+
 <img src="assets/screenshots/categories.png" height="500em" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/screenshots/profile.png" height="500em" />
 
 <!-- ![categories](https://github.com/samwel-chege/flutter-ecommerce/assets/84846349/2d946f8a-60e0-4758-9d83-9e2edd114811) -->
