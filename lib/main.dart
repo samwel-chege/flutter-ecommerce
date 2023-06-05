@@ -1,3 +1,4 @@
+import 'package:ecommerce/shop/CartController.dart';
 import 'package:ecommerce/shop/cart_page.dart';
 import 'package:ecommerce/shop/product_detail.dart';
 import 'package:ecommerce/tabs_screen.dart';
@@ -5,14 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:ecommerce/auth/signup_page.dart';
 import 'package:ecommerce/auth/login_page.dart';
 import 'package:ecommerce/shop/items_page.dart';
+import 'package:get/get.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/src/change_notifier_provider.dart';
 import 'shop/product_page.dart';
 
 void main() {
-  runApp(
-    Ecommerce(),
-  );
+  Get.put(CartController());
+  runApp(const GetMaterialApp(
+    home: Ecommerce(),
+    debugShowCheckedModeBanner: false,
+  ));
 }
 
 class SplashScreen extends StatefulWidget {
