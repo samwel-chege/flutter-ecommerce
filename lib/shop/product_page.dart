@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:ecommerce/auth/login_page.dart';
 import 'package:ecommerce/screens/profile_page.dart';
+import 'package:ecommerce/shop/CartController.dart';
 import 'package:ecommerce/shop/items_page.dart';
 import 'package:ecommerce/shop/product_detail.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +15,11 @@ import 'cart_page.dart';
 import '../API/api.dart';
 import '../services/functions.dart';
 import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
 class ProductPage extends StatefulWidget {
   // ProductPage({super.key});
+
   late final ProductPage product;
 
   static const routeName = '/products';
@@ -26,6 +29,7 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
+  final CartController _cartController = Get.find();
   // final Cart cart = Cart();
   @override
   void initState() {
@@ -52,6 +56,7 @@ class _ProductPageState extends State<ProductPage> {
       var responsedata = await httppost(bearerToken, productsUrl, context);
 
       var product = jsonDecode(responsedata);
+
       if (product != null) {
         pr.hide();
       }
@@ -100,17 +105,26 @@ class _ProductPageState extends State<ProductPage> {
                     ),
                     trailing: GestureDetector(
                       onTap: () {
+                        // _cartController.addToCart(products[index]);
                         setState(() {
                           items.add(products[index]);
                           sumlist(products[index]["selling_price"]);
                         });
                         setCart(items);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          snackBarWidget(
-                            'Product added to cart',
-                            Colors.green,
-                          ),
+                        Get.snackbar(
+                          products[index]['prod_name'],
+                          'added to cart',
+                          duration: const Duration(seconds: 3),
+                          icon: const Icon(Icons.add_alert),
+                          backgroundColor: Colors.amberAccent,
+                          snackPosition: SnackPosition.BOTTOM,
                         );
+                        // ScaffoldMessenger.of(context).showSnackBar(
+                        //   snackBarWidget(
+                        //     'Product added to cart',
+                        //     Colors.green,
+                        //   ),
+                        // );
                       },
                       child: Icon(Icons.add_shopping_cart),
                     ),

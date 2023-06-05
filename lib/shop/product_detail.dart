@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../common.dart';
 import '../services/functions.dart';
+import 'package:get/get.dart';
 
 class ProductDetail extends StatefulWidget {
   static const routeName = '/productdetail';
@@ -73,12 +74,20 @@ class _ProductDetailState extends State<ProductDetail> {
                             sumlist(widget.product["selling_price"]);
                           });
                           setCart(items);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            snackBar(
-                              'Product added to cart',
-                              Colors.green,
-                            ),
+                          Get.snackbar(
+                            widget.product['prod_name'],
+                            'added to cart',
+                            duration: const Duration(seconds: 3),
+                            icon: const Icon(Icons.add_alert),
+                            backgroundColor: Colors.amberAccent,
+                            snackPosition: SnackPosition.BOTTOM,
                           );
+                          // ScaffoldMessenger.of(context).showSnackBar(
+                          //   snackBar(
+                          //     'Product added to cart',
+                          //     Colors.green,
+                          //   ),
+                          // );
                         },
                         icon: const Icon(Icons.add_shopping_cart),
                         label: const Text(

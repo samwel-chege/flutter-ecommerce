@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:ecommerce/shop/CartController.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../common.dart';
@@ -15,6 +17,8 @@ class ShoppingCartPage extends StatefulWidget {
 }
 
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
+  final CartController _cartController = Get.find();
+
   var itemsincart = [];
   @override
   void initState() {
@@ -53,14 +57,6 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                 : ListView.builder(
                     itemCount: items.length,
                     itemBuilder: (context, index) {
-                      // return ProductCard(
-                      //   productImage: items[index].productImage,
-                      //   productName: items[index].productName,
-                      //   productPrice: items[index].productPrice,
-                      //   icon: Icons.delete,
-                      //   widget: items[index],
-                      // );
-
                       return Padding(
                         padding: const EdgeInsets.only(top: 15.0),
                         child: Column(
@@ -105,11 +101,6 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                                                     ["selling_price"]);
                                                 items.remove(items[index]);
                                               });
-                                              // deleteCart().then(
-                                              //   (value) {
-                                              //     setCart(items);
-                                              //   },
-                                              // );
                                             },
                                           )
                                         ],
